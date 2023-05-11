@@ -1,2 +1,2 @@
 print("hello")
-print("world0000000000000")
+print("world000000000000")
