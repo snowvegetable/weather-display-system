@@ -1,4 +1,4 @@
-'''
+"""
 GUI 的資訊連結與 API 還有詳細說明：
 
     先幫我下載這個：
@@ -13,7 +13,7 @@ GUI 的資訊連結與 API 還有詳細說明：
     主題一般預設為 Litera 如果想使用其他主題，可以輸入其他內置主題的名字
 
     使用 python 版本：3.10.7
-'''
+"""
 
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
