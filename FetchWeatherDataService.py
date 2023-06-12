@@ -2,8 +2,8 @@ import requests
 
 
 class FetchWeatherDataService:
-    def __init__(self, token: str):
-        self.token = token
+    def __init__(self, authorization: str):
+        self.authorization = authorization
 
 
 if __name__ == '__main__':
