@@ -101,5 +101,6 @@ class App(ttk.Window):
         self.weather_forecast_page.pack()
 
 
-app = App(themename = "minty")
-app.mainloop()
+if __name__ == '__main__':
+    app = App(themename = "minty")
+    app.mainloop()
