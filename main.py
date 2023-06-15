@@ -35,6 +35,9 @@ class App(ttk.Window):
         self.home_page.pack()
         self._set_home_page()
 
+        # 天氣預報畫面
+        self.weather_forecast_page = ttk.Frame(self)
+
     # 設定主畫面布局
     def _set_home_page(self):
         # 首頁標題
@@ -57,39 +60,10 @@ class App(ttk.Window):
 
         # 按鈕
         self.b1 = ttk.Button(
-            self.home_page, text = "氣候 climate", bootstyle = (PRIMARY, OUTLINE)
+            self.home_page, text = "天氣預報 climate", command = self._show_weather_forecast,
+            bootstyle = (PRIMARY, OUTLINE)
         )
         self.b1.pack(pady = 10)
-
-        self.b2 = ttk.Button(
-            self.home_page, text = "預報 forecast", bootstyle = (SECONDARY, OUTLINE)
-        )
-        self.b2.pack(pady = 10)
-
-        self.b3 = ttk.Button(
-            self.home_page, text = "觀測 observation", bootstyle = (SUCCESS, OUTLINE)
-        )
-        self.b3.pack(pady = 10)
-
-        self.b4 = ttk.Button(
-            self.home_page, text = "天文 astronomical", bootstyle = (INFO, OUTLINE)
-        )
-        self.b4.pack(pady = 10)
-
-        self.b5 = ttk.Button(
-            self.home_page, text = "天氣警特報 weather alert", bootstyle = (WARNING, OUTLINE)
-        )
-        self.b5.pack(pady = 10)
-
-        self.b6 = ttk.Button(
-            self.home_page, text = "數值預報 numerical forecast", bootstyle = (DANGER, OUTLINE)
-        )
-        self.b6.pack(pady = 10)
-
-        self.b7 = ttk.Button(
-            self.home_page, text = "地震與海嘯 earthquake & tsunami", bootstyle = (DARK, OUTLINE)
-        )
-        self.b7.pack(pady = 10)
 
     # 更新下拉表單
     def _update_location_list(self, *args):
@@ -97,8 +71,34 @@ class App(ttk.Window):
         print(self.area_list.get())
 
     # 回到首頁
-    def _back_home_home(self):
+    def _back_home_page(self):
+        self.weather_forecast_page.pack_forget()
+        self.weather_forecast_page = ttk.Frame(self)
+
         self.home_page.pack()
+
+    # 顯示天氣預報畫面
+    def _show_weather_forecast(self):
+        # 如果沒有選擇縣市或鄉鎮就不會跳轉畫面
+        if self.area_list.get() == "" or self.location_list.get() == "":
+            return
+
+        self.title_label = ttk.Label(
+            self.weather_forecast_page,
+            font = ("microsoft yahei", 18),
+            text = f"您所選擇的區域為：{self.area_list.get()} {self.location_list.get()}",
+        )
+        self.title_label.pack()
+
+        self.back_home_btn = ttk.Button(
+            self.weather_forecast_page,
+            text = "back",
+            command = self._back_home_page
+        )
+        self.back_home_btn.pack()
+
+        self.home_page.pack_forget()
+        self.weather_forecast_page.pack()
 
 
 app = App(themename = "minty")
