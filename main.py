@@ -68,7 +68,6 @@ class App(ttk.Window):
     # 更新下拉表單
     def _update_location_list(self, *args):
         self.location_list["values"] = location_name[self.area_list.get()]
-        print(self.area_list.get())
 
     # 回到首頁
     def _back_home_page(self):
@@ -89,6 +88,21 @@ class App(ttk.Window):
             text = f"您所選擇的區域為：{self.area_list.get()} {self.location_list.get()}",
         )
         self.title_label.pack()
+
+        datas = self.fetch_weather_data_service.get_weather_forecast_data(
+            location_id = area_name_conversion_id_table[self.area_list.get()],
+            location_name = self.location_list.get()
+        )[0:7]
+
+        print(datas)
+
+        for data in datas:
+            self.data_label = ttk.Label(
+                self.weather_forecast_page,
+                font = ("microsoft yahei", 12),
+                text = f"開始時間{data['startTime']}-結束時間{data['endTime']} 降雨機率:{data['elementValue'][0]['value']}%"
+            )
+            self.data_label.pack(pady = 10)
 
         self.back_home_btn = ttk.Button(
             self.weather_forecast_page,

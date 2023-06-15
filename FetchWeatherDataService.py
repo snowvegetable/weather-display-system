@@ -15,7 +15,7 @@ class FetchWeatherDataService:
             "locationName": location_name  # 鄉鎮名稱
         }
         response = requests.get(url, params)
-        return response.json()["records"]["locations"][0]["location"][0]["weatherElement"]
+        return response.json()["records"]["locations"][0]["location"][0]["weatherElement"][0]["time"]
 
 # if __name__ == '__main__':
 #     token = "CWB-1926AAC3-EDEB-47C2-985A-1EE9120A0E55"
