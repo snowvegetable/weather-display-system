@@ -84,5 +84,3 @@ area_name_conversion_id_table = {
     "金門縣": "F-D0047-087"
 }
 
-if __name__ == '__main__':
-    print(area_name_conversion_id_table["桃園市"])

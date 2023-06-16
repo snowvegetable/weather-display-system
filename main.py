@@ -38,6 +38,9 @@ class App(ttk.Window):
         # 天氣預報畫面
         self.weather_forecast_page = ttk.Frame(self)
 
+        # 天氣警特報畫面
+        self.weather_alert_page = ttk.Frame(self)
+
     # 設定主畫面布局
     def _set_home_page(self):
         # 首頁標題
@@ -60,10 +63,19 @@ class App(ttk.Window):
 
         # 按鈕
         self.b1 = ttk.Button(
-            self.home_page, text = "天氣預報 climate", command = self._show_weather_forecast,
+            self.home_page,
+            text = "天氣預報",
+            command = self._show_weather_forecast,
             bootstyle = (PRIMARY, OUTLINE)
         )
         self.b1.pack(pady = 10)
+
+        self.b2 = ttk.Button(
+            self.home_page,
+            text = "天氣警特報",
+            command = self._show_weather_alert,
+            bootstyle = (SECONDARY, OUTLINE))
+        self.b2.pack(pady = 10)
 
     # 更新下拉表單
     def _update_location_list(self, *args):
@@ -73,6 +85,9 @@ class App(ttk.Window):
     def _back_home_page(self):
         self.weather_forecast_page.pack_forget()
         self.weather_forecast_page = ttk.Frame(self)
+
+        self.weather_alert_page.pack_forget()
+        self.weather_alert_page = ttk.Frame(self)
 
         self.home_page.pack()
 
@@ -113,6 +128,46 @@ class App(ttk.Window):
 
         self.home_page.pack_forget()
         self.weather_forecast_page.pack()
+
+    def _show_weather_alert(self):
+        # 如果沒有選擇縣市或鄉鎮就不會跳轉畫面
+        if self.area_list.get() == "" or self.location_list.get() == "":
+            return
+
+        self.title_label = ttk.Label(
+            self.weather_alert_page,
+            font = ("microsoft yahei", 18),
+            text = f"您所選擇的區域為：{self.area_list.get()} {self.location_list.get()}",
+        )
+        self.title_label.pack()
+
+        datas = self.fetch_weather_data_service.get_weather_alert_data(
+            self.area_list.get()
+        )
+
+        for data in datas:
+
+            value = datas[data]
+
+            if not datas[data]:
+                value = "無"
+
+            self.data_label = ttk.Label(
+                self.weather_alert_page,
+                font = ("microsoft yahei", 12),
+                text = f"{data}:{value}"
+            )
+            self.data_label.pack(pady = 10)
+
+        self.back_home_btn = ttk.Button(
+            self.weather_alert_page,
+            text = "back",
+            command = self._back_home_page
+        )
+        self.back_home_btn.pack()
+
+        self.home_page.pack_forget()
+        self.weather_alert_page.pack()
 
 
 if __name__ == '__main__':
