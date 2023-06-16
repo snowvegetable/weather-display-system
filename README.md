@@ -1,2 +1,9 @@
 # 天氣顯示系統
-## 程式功能
+## 環境安裝
+```bash
+pip install ttkbootstrap
+```
+
+```bash
+pip install requests
+```
