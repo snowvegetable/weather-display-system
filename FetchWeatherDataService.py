@@ -32,7 +32,11 @@ class FetchWeatherDataService:
             }
             response = requests.get(url, params)
 
-            return_data.append(response.json()["records"]["location"][0]["hazardConditions"]["hazards"])
+            if not response.json()["records"]["location"][0]["hazardConditions"]["hazards"]:
+                return_data.append("無")
+            else:
+                return_data.append(
+                    response.json()["records"]["location"][0]["hazardConditions"]["hazards"][0]["info"]["significance"])
 
         return {
             "濃霧": return_data[0],
